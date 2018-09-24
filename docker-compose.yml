@@ -1,0 +1,28 @@
+version: '2.1'
+
+services:
+
+  frontend: 
+    container_name: react-frontend
+    image: vivekthite/frontend   
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev     
+    ports:
+      - 8080:3000
+    volumes: 
+      - ./public:/app/public
+      - ./src:/app/src
+      - ./.env:/app/.env
+
+  tests: 
+    container_name: frontend-tests
+    image: vivekthite/frontend-tests   
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev    
+    volumes: 
+      - ./public:/app/public
+      - ./src:/app/src
+      - ./.env:/app/.env
+    command: ["npm","run","test"]       
