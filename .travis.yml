@@ -6,4 +6,16 @@ before_install:
   - docker build -t vivekthite/docker-react -f Dockerfile.dev .
   
 script:
-  - docker run vivekthite/docker-react npm run test -- --coverage   
+  - docker run vivekthite/docker-react npm run test -- --coverage
+  
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  region: "us-east-1"  
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-183787835880"
+  on:
+    branch: master
